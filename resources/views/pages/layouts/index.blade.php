@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="pages/css/base.css">
     <link rel="stylesheet" href="pages/css/vendor.css">
     <link rel="stylesheet" href="pages/css/main.css">
+    <link rel="stylesheet" href="pages/css/comment.css">
 
     <!-- script
     ================================================== -->

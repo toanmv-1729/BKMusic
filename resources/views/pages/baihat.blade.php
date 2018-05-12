@@ -1,3 +1,6 @@
+<?php use App\User; ?>
+<?php use App\Comments; ?>
+<?php use App\Likecmt; ?>
 @extends('pages.layouts.index')
 
 @section('content')
@@ -44,194 +47,122 @@
 
         <!-- comments
         ================================================== -->
-        <div class="comments-wrap">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+    <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Bình luận
+                            <small>comment</small>
+                        </h1>
+                    </div>
+                    
+                    <div class="boxComment col-md-4">
+                        @foreach($comments as $cms)
+                            @if($cms->parent_id == 0)
+                                <div class="comments{{$cms->id}}">
+                                    <?php $user = User::find($cms->user_id); ?>
+                                    <div style="margin-bottom: 13px">
+                                        <img class="avatar-user" src="upload/user/{{$user->urlanh}}" width="30px" />
+                                        <p style="margin-bottom: 0px"><b>{{$user->name}}</b>
+                                            <span class="span{{$cms->id}}" style="margin-left: 10px">{{$cms->comment}}</span>
+                                            <span class="edit-div{{$cms->id}}"></span>
+                                        </p>
 
-            <div id="comments" class="row">
-                <div class="col-full">
+                                        <?php $countLikecmt = Likecmt::Where('comment_id', $cms->id)->count(); ?>
+                                            <span class="countIcon{{$cms->id}}">{{$countLikecmt}}</span>
+                                        {{-- Check login user --}}
+                                        @if($user_id != 0)
+                                            <span>
+                                                <ul class="fbicon contain-icon">
+                                                    <li>
+                                                        <?php $isLikecmt = Likecmt::Where('user_id', $user_id)->Where('comment_id', $cms->id)->count(); ?>
+                                                        @if($isLikecmt == 0)
+                                                            <a class = "control{{$cms->id}}" onclick="dislike({{$cms->id}}, {{$user_id}})"><i class="fa fa-thumbs-o-up icon-like" aria-hidden="true"></i></a>
+                                                        @else
+                                                            <?php $control = Likecmt::Where('user_id', $user_id)->Where('comment_id', $cms->id)->first(); ?>
+                                                            @if($control->control == 1)
+                                                                <a class = "control{{$cms->id}}" onclick="dislike({{$cms->id}}, {{$user_id}})"><i class="fa fa-thumbs-up icon-like" aria-hidden="true"></i></a>
+                                                            @elseif($control->control == 0)
+                                                                <a class = "control{{$cms->id}}" onclick="dislike({{$cms->id}}, {{$user_id}})"><img class="angry" src="pages/images/happy.png" /></a>
+                                                            @else
+                                                                <a class = "control{{$cms->id}}" onclick="dislike({{$cms->id}}, {{$user_id}})"><img class="none" src="pages/images/wow.png" /></a>
+                                                            @endif
+                                                        @endif
 
-                    <h3 class="h2">5 Comments</h3>
+                                                        <ul class="show-icon">
+                                                            <li ><a class="heart" onclick="like_comment({{$cms->id}}, {{$user_id}}, 1)"><i class="fa fa-thumbs-up icon-like" aria-hidden="true"></i></a></li>
+                                                            <li ><a class="angry" onclick="like_comment({{$cms->id}}, {{$user_id}}, -1)"><img class="angry" src="pages/images/wow.png" /></a></li>
+                                                            <li><a  onclick="like_comment({{$cms->id}}, {{$user_id}}, 0)"><img class="none" src="pages/images/happy.png" /></a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </span>
 
-                    <!-- commentlist -->
-                    <ol class="commentlist">
+                                            {{-- Delete user'comment --}}
+                                            @if($user_id == $cms->user_id)
+                                                <a class="action" onclick="removeComment({{$cms->id}}, {{$music_id}})">Delete </a>
+                                            @endif
 
-                        <li class="depth-1 comment">
+                                            {{-- Reply comment --}}
+                                            <span class="reply-span{{$cms->id}}">
+                                                <a class = "action reply{{$cms->id}}" onclick = "load_reply({{$cms->id}})" style="font-size: 12px">Reply </a>
+                                            </span>
 
-                            <div class="comment__avatar">
-                                <img width="50" height="50" class="avatar" src="images/avatars/user-01.jpg" alt="">
-                            </div>
+                                            {{-- Edit user'comment --}}
+                                            @if($user_id == $cms->user_id)
+                                                <span class = "removeEdit{{$cms->id}}">
+                                                    <a class=" action edit{{$cms->id}}" onclick="edit({{$cms->id}})" style="font-size: 12px">Edit</a>
+                                                </span>
+                                            @endif
+                                        @else
+                                            <a class = "control{{$cms->id}}" onclick="confirmLogin()"><i class="fa fa-thumbs-o-up icon-like" aria-hidden="true"></i></a>
+                                        @endif
 
-                            <div class="comment__content">
-
-                                <div class="comment__info">
-                                    <cite>Itachi Uchiha</cite>
-
-                                    <div class="comment__meta">
-                                        <time class="comment__time">Dec 16, 2017 @ 23:05</time>
-                                        <a class="reply" href="#0">Reply</a>
+                                        {{-- Show create_at --}}
+                                        <span class="dt"><i><?php echo date('d-m-Y H:i:s', strtotime($cms->created_at)); ?></i></span>
+                                        {{-- Check reply --}}
+                                        <?php $isReply = Comments::Where('parent_id', $cms->id)->count(); ?>
+                                        @if($isReply != 0)
+                                            <div class = "isReply{{$cms->id}}" style = "color: blue">
+                                                <span class="reply-hidden{{$cms->id}}">
+                                                    <a class = "action reply{{$cms->id}}" onclick = "load_reply({{$cms->id}})"><i class="fa fa-reply" aria-hidden="true"></i></a>
+                                                    <a class = "action reply{{$cms->id}}" onclick = "load_reply({{$cms->id}})"> {{$isReply}} Replies</a>
+                                                </span>
+                                            </div>
+                                        @else
+                                            <div class = "isReply{{$cms->id}}" style = "color: blue">
+                                                <span class="reply-hidden{{$cms->id}}"></span>
+                                            </div>
+                                        @endif
+                                        <div class = "loadReply loadMore{{$cms->id}}"></div>
                                     </div>
                                 </div>
+                            @endif
+                        @endforeach
 
-                                <div class="comment__text">
-                                <p>Adhuc quaerendum est ne, vis ut harum tantas noluisse, id suas iisque mei. Nec te inani ponderum vulputate,
-                                facilisi expetenda has et. Iudico dictas scriptorem an vim, ei alia mentitum est, ne has voluptua praesent.</p>
-                                </div>
-
+                        <!-- Form add comment -->
+                        <div class="newComment"></div>
+                        <div class="addComment input-group">
+                            <input type="text" class="form-control comment-input" placeholder="Add your comment" />
+                            <div class="input-group-btn">
+                                @if($user_id != 0)
+                                    <button class="btn btn-success" type="submit" onclick="addComment({{$music_id}})">Send</button>
+                                @else
+                                    <button class="btn btn-success" type="submit" onclick="confirmLogin()">Send</button>
+                                @endif
                             </div>
-
-                        </li> <!-- end comment level 1 -->
-
-                        <li class="thread-alt depth-1 comment">
-
-                            <div class="comment__avatar">
-                                <img width="50" height="50" class="avatar" src="images/avatars/user-04.jpg" alt="">
-                            </div>
-
-                            <div class="comment__content">
-
-                                <div class="comment__info">
-                                <cite>John Doe</cite>
-
-                                <div class="comment__meta">
-                                    <time class="comment__time">Dec 16, 2017 @ 24:05</time>
-                                    <a class="reply" href="#0">Reply</a>
-                                </div>
-                                </div>
-
-                                <div class="comment__text">
-                                <p>Sumo euismod dissentiunt ne sit, ad eos iudico qualisque adversarium, tota falli et mei. Esse euismod
-                                urbanitas ut sed, et duo scaevola pericula splendide. Primis veritus contentiones nec ad, nec et
-                                tantas semper delicatissimi.</p>
-                                </div>
-
-                            </div>
-
-                            <ul class="children">
-
-                                <li class="depth-2 comment">
-
-                                    <div class="comment__avatar">
-                                        <img width="50" height="50" class="avatar" src="images/avatars/user-03.jpg" alt="">
-                                    </div>
-
-                                    <div class="comment__content">
-
-                                        <div class="comment__info">
-                                            <cite>Kakashi Hatake</cite>
-
-                                            <div class="comment__meta">
-                                                <time class="comment__time">Dec 16, 2017 @ 25:05</time>
-                                                <a class="reply" href="#0">Reply</a>
-                                            </div>
-                                        </div>
-
-                                        <div class="comment__text">
-                                            <p>Duis sed odio sit amet nibh vulputate
-                                            cursus a sit amet mauris. Morbi accumsan ipsum velit. Duis sed odio sit amet nibh vulputate
-                                            cursus a sit amet mauris</p>
-                                        </div>
-
-                                    </div>
-
-                                    <ul class="children">
-
-                                        <li class="depth-3 comment">
-
-                                            <div class="comment__avatar">
-                                                <img width="50" height="50" class="avatar" src="images/avatars/user-04.jpg" alt="">
-                                            </div>
-
-                                            <div class="comment__content">
-
-                                                <div class="comment__info">
-                                                <cite>John Doe</cite>
-
-                                                <div class="comment__meta">
-                                                    <time class="comment__time">Dec 16, 2017 @ 25:15</time>
-                                                    <a class="reply" href="#0">Reply</a>
-                                                </div>
-                                                </div>
-
-                                                <div class="comment__text">
-                                                <p>Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est
-                                                etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.</p>
-                                                </div>
-
-                                            </div>
-
-                                        </li>
-
-                                    </ul>
-
-                                </li>
-
-                            </ul>
-
-                        </li> <!-- end comment level 1 -->
-
-                        <li class="depth-1 comment">
-
-                            <div class="comment__avatar">
-                                <img width="50" height="50" class="avatar" src="images/avatars/user-02.jpg" alt="">
-                            </div>
-
-                            <div class="comment__content">
-
-                                <div class="comment__info">
-                                <cite>Shikamaru Nara</cite>
-
-                                <div class="comment__meta">
-                                    <time class="comment-time">Dec 16, 2017 @ 25:15</time>
-                                    <a class="reply" href="#">Reply</a>
-                                </div>
-                                </div>
-
-                                <div class="comment__text">
-                                <p>Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem.</p>
-                                </div>
-
-                            </div>
-
-                        </li>  <!-- end comment level 1 -->
-
-                    </ol> <!-- end commentlist -->
-
-
-                    <!-- respond
-                    ================================================== -->
-                    <div class="respond">
-
-                        <h3 class="h2">Add Comment</h3>
-
-                        <form name="contactForm" id="contactForm" method="post" action="">
-                            <fieldset>
-
-                                <div class="form-field">
-                                        <input name="cName" type="text" id="cName" class="full-width" placeholder="Your Name" value="">
-                                </div>
-
-                                <div class="form-field">
-                                        <input name="cEmail" type="text" id="cEmail" class="full-width" placeholder="Your Email" value="">
-                                </div>
-
-                                <div class="form-field">
-                                        <input name="cWebsite" type="text" id="cWebsite" class="full-width" placeholder="Website" value="">
-                                </div>
-
-                                <div class="message form-field">
-                                    <textarea name="cMessage" id="cMessage" class="full-width" placeholder="Your Message"></textarea>
-                                </div>
-
-                                <button type="submit" class="submit btn--primary btn--large full-width">Submit</button>
-
-                            </fieldset>
-                        </form> <!-- end form -->
-
-                    </div> <!-- end respond -->
-
-                </div> <!-- end col-full -->
-
-            </div> <!-- end row comments -->
-        </div> <!-- end comments-wrap -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
 
     </section>
+@endsection
+
+@section('script')
+    {{-- function js --}}
+    <script type="text/javascript" src="{{ URL::asset('pages/js/comment.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('pages/js/likecmt.js') }}"></script>
 @endsection

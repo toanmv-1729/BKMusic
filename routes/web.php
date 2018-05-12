@@ -82,3 +82,15 @@ Route::group(['prefix'=>'admin', 'middleware'=>'adminLogin'],function(){
 Route::get('trangchu','PagesController@trangchu');
 Route::get('baihat/{id}.html','PagesController@baihat');
 
+Route::group(['prefix' => 'comments'], function(){
+	Route::get('addComment', 'CommentsController@addComment');
+	Route::get('likeComment', 'LikecmtController@likeComment');
+	Route::get('dislikeComment', 'LikecmtController@dislikeComment');
+	Route::get('removeComment', 'CommentsController@removeComment');
+	Route::get('edit', 'CommentsController@edit');
+	Route::get('editSave', 'CommentsController@editSave');
+	Route::get('loadReply', 'CommentsController@loadReply');
+	Route::get('removeReply', 'CommentsController@removeReply');
+	Route::get('reply', 'CommentsController@reply');
+	Route::get('hiddenReply', 'CommentsController@hiddenReply');
+});

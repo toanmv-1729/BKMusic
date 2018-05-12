@@ -8,6 +8,7 @@ use App\Singer;
 use App\Song;
 use App\TheLoai;
 use App\User;
+use App\Comments;
 
 class PagesController extends Controller
 {
@@ -29,8 +30,14 @@ class PagesController extends Controller
     }
 
     function baihat($id) {
+        if(Auth::check()){
+          $user_id = Auth::user()->id;
+        }else{
+          $user_id = 0;
+        }
         $baihat = Song::find($id);
-        
-        return view('pages.baihat',['baihat'=>$baihat]);
+        $comments = Comments::where('music_id', $id)->get();
+
+        return view('pages.baihat',['baihat'=>$baihat, 'comments' => $comments, 'music_id' => $id, 'user_id' => $user_id]);
     }
 }
