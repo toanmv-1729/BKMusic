@@ -82,6 +82,29 @@ Route::group(['prefix'=>'admin', 'middleware'=>'adminLogin'],function(){
 Route::get('trangchu','PagesController@trangchu');
 Route::get('baihat/{id}.html','PagesController@baihat');
 
+Route::group(['prefix' => 'database'], function(){
+	Route::get('comment', function(){
+		Schema::create('comments', function($table){
+			$table->increments('id');
+			$table->integer('parent_id')->default(0);
+			$table->integer('user_id');
+			$table->integer('music_id');
+			$table->text('comment');
+			$table->timestamps();
+		});
+	});
+
+	Route::get('likecmts', function(){
+		Schema::create('likecmts', function($table){
+			$table->increments('id');
+			$table->integer('user_id');
+			$table->integer('comment_id');
+			$table->integer('control');
+			$table->timestamps();
+		});
+	});
+});
+
 Route::group(['prefix' => 'comments'], function(){
 	Route::get('addComment', 'CommentsController@addComment');
 	Route::get('likeComment', 'LikecmtController@likeComment');
