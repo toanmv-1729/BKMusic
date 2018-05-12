@@ -80,4 +80,5 @@ Route::group(['prefix'=>'admin', 'middleware'=>'adminLogin'],function(){
 });
 
 Route::get('trangchu','PagesController@trangchu');
+Route::get('baihat/{id}.html','PagesController@baihat');
 

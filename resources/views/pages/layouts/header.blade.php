@@ -70,10 +70,7 @@
                         <a href="#0" title="">Ca Sĩ</a>
                         <ul class="sub-menu">
                             @foreach($casi as $cs)
-                            <li><a href="single-video.html">Sơn Tùng</a></li>
-                            <li><a href="single-audio.html">Lê Hiếu</a></li>
-                            <li><a href="single-gallery.html">Soobin Hoàng Sơn</a></li>
-                            <li><a href="single-standard.html">Quang Lê</a></li>
+                            <li><a href="casi/{{ $cs->id }}.html">{{ $cs->ten }}</a></li>
                             @endforeach
                         </ul>
                     </li>
