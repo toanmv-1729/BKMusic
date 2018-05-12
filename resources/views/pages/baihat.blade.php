@@ -33,6 +33,8 @@
                     </div>
                 </div>
             </div> <!-- end s-content__media -->
+            
+            <a onclick="myFunction({{$baihat->id}})" href="/downloadBaiHat/{{$baihat->id}}/{{$baihat->urlthuong}}" class="btn btn-general btn-white" style="padding: 5px;"><i class="fa fa-download"></i> Download</a>
 
             <div class="col-full s-content__main">
 
@@ -165,4 +167,13 @@
     {{-- function js --}}
     <script type="text/javascript" src="{{ URL::asset('pages/js/comment.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('pages/js/likecmt.js') }}"></script>
+@endsection
+
+@section('script')
+<script>
+    function myFunction(id){
+        var $tmp = Number($('.number'+ id).text()) + 1;
+        $('.number' + id + ':first').html(" " + $tmp);
+    }
+</script>
 @endsection

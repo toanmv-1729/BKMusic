@@ -91,4 +91,20 @@ function stripUnicode($str){
 }
 
 
+function checkExtensionMusic($ext){
+	$extMusic = [
+		'mp3',
+		'flac'
+	];
+	if(in_array(strtolower($ext), $extMusic))
+		return true;
+	return false;
+}
+
+function getUrlFileUpload($ext,$str){
+	if(checkExtensionMusic($ext)) return "baihat/{$str}";
+	return $str;
+}
+
+
 ?>

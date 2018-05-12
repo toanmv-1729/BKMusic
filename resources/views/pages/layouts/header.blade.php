@@ -69,8 +69,10 @@
                     <li class="has-children">
                         <a href="#0" title="">Ca Sĩ</a>
                         <ul class="sub-menu">
-                            @foreach($casi as $cs)
+                            @foreach($theloai as $tl)
+                            @foreach($tl->casi as $cs)
                             <li><a href="casi/{{ $cs->id }}.html">{{ $cs->ten }}</a></li>
+                            @endforeach
                             @endforeach
                         </ul>
                     </li>
@@ -81,8 +83,13 @@
                             <li><a href="single-audio.html">Giới thiệu Vip</a></li>
                         </ul>
                     </li>
-                    <li><a href="about.html" title="">Đăng nhập</a></li>
-                    <li><a href="contact.html" title="">Đăng ký</a></li>
+                    @if(!Auth::user())
+                    <li><a href="dangnhap" title="">Đăng nhập</a></li>
+                    <li><a href="dangky" title="">Đăng ký</a></li>
+                    @else
+                    <li><a href="nguoidung" title="">{{ Auth::user()->name }}</a></li>
+                    <li><a href="dangxuat" title="">Đăng xuất</a></li>
+                    @endif
                 </ul> <!-- end header__nav -->
 
                 <a title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>

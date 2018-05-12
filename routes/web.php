@@ -81,6 +81,14 @@ Route::group(['prefix'=>'admin', 'middleware'=>'adminLogin'],function(){
 
 Route::get('trangchu','PagesController@trangchu');
 Route::get('baihat/{id}.html','PagesController@baihat');
+Route::get('/downloadBaiHat/{id}/{file}', 'downloadController@downloadBaiHat');
+Route::get('casi/{id}.html','PagesController@casi');
+Route::get('theloai/{id}/{tenkhongdau}.html','PagesController@dsbaihat');
+Route::get('dangnhap','PagesController@getDangNhap');
+Route::post('dangnhap','PagesController@postDangNhap');
+Route::get('dangxuat','PagesController@getDangXuat');
+Route::get('dangky','PagesController@getDangKy');
+Route::post('dangky','PagesController@postDangKy');
 
 Route::group(['prefix' => 'comments'], function(){
 	Route::get('addComment', 'CommentsController@addComment');
