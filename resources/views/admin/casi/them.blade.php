@@ -10,7 +10,7 @@
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
-            <div class="col-lg-7" style="padding-bottom:120px">
+            <div class="col-lg-10" style="padding-bottom:120px">
                 @if(count($errors) > 0)
                     <div class="alert alert-danger">
                         @foreach($errors->all() as $err)
@@ -29,9 +29,19 @@
                         <label>Tên Ca sĩ</label>
                         <input class="form-control" name="ten" placeholder="Nhập tên ca sĩ" />
                     </div>
+                    
+                    <div class="form-group">
+                        <label>Thể loại</label>
+                        <select class="form-control" name="theloai">
+                            @foreach($theloai as $tl)
+                                <option value="{{$tl->id}}"> {{$tl->ten}} </option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label>Thông tin</label>
-                        <input id="thongtin" name="thongtin" class="form-control ckeditor" rows="5"/>
+                        <textarea id="demo" name="thongtin" class="form-control ckeditor" rows="3"></textarea>
                     </div>
                     <div class="form-group">
                         <label>Ảnh</label>

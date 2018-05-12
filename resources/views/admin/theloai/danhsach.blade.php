@@ -28,11 +28,11 @@
                 <tbody>
                     @foreach($theloai as $tl)
                     <tr class="odd gradeX" align="center">
-                        <td>{{$tl->idTheLoai}}</td>
+                        <td>{{$tl->id}}</td>
                         <td>{{$tl->ten}}</td>
                         <td>{{$tl->tenkhongdau}}</td>
-                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/theloai/sua/{{$tl->idTheLoai}}"> Sửa</a></td>
-                        <td class="center"><i class="fa fa-trash-o fa-fw"></i> <a href="admin/theloai/xoa/{{$tl->idTheLoai}}">Xóa</a></td>
+                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/theloai/sua/{{$tl->id}}"> Sửa</a></td>
+                        <td class="center"><i class="fa fa-trash-o fa-fw"></i> <a href="admin/theloai/xoa/{{$tl->id}}">Xóa</a></td>
                     </tr>
                     @endforeach
                 </tbody>

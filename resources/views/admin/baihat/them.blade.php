@@ -10,7 +10,7 @@
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
-            <div class="col-lg-7" style="padding-bottom:120px">
+            <div class="col-lg-10" style="padding-bottom:120px">
                 @if(count($errors) > 0)
                     <div class="alert alert-danger">
                         @foreach($errors->all() as $err)
@@ -23,25 +23,25 @@
                         {{session('thongbao')}}
                     </div>
                 @endif
-                <form action="admin/baihat/them" method="POST">
+                <form action="admin/baihat/them" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{csrf_token()}}" />
                     <div class="form-group">
                         <label>Tên Bài Hát</label>
                         <input class="form-control" name="ten" placeholder="Nhập tên bài hát" />
                     </div>
                     <div class="form-group">
-                        <label>Ca sĩ</label>
-                        <select class="form-control" name="casi" id="casi">
-                            @foreach($casi as $cs)
-                                <option value="{{$cs->idCaSi}}">{{$cs->ten}}</option>
+                        <label>Thể loại</label>
+                        <select class="form-control" name="theloai" id="theloai">
+                            @foreach($theloai as $tl)
+                                <option value="{{$tl->id}}">{{$tl->ten}}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Thể loại</label>
-                        <select class="form-control" name="theloai" id="theloai">
+                        <label>Ca Sĩ</label>
+                        <select class="form-control" name="casi" id="casi">
                             @foreach($casi as $cs)
-                                <option value="{{$cs->idCaSi}}">{{$cs->ten}}</option>
+                                <option value="{{$cs->id}}">{{$cs->ten}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -76,4 +76,17 @@
     <!-- /.container-fluid -->
 </div>
 <!-- /#page-wrapper -->
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function(){
+            $("#theloai").change(function(){
+                var idtheloai = $(this).val();
+                $.get("admin/ajax/casi/"+idtheloai,function(data){
+                    $("#casi").html(data);
+                });
+            });
+        });
+    </script>
 @endsection

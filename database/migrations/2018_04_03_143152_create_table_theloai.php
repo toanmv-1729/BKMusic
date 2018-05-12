@@ -13,10 +13,11 @@ class CreateTableTheloai extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('theloai');
         Schema::create('theloai', function (Blueprint $table) {
-            $table->increments('idTheLoai');
-            $table->string('ten');
-            $table->string('tenkhongdau');
+            $table->increments('idtheloai');
+            $table->string('ten')->unique();
+            $table->string('tenkhongdau')->unique();
             $table->timestamps();
         });
     }

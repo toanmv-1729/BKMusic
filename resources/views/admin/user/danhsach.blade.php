@@ -30,7 +30,7 @@
                     @foreach($user as $u)
                     <tr class="odd gradeX" align="center">
                         <td>{{$u->id}}</td>
-                        <td>{{$u->ten}}</td>
+                        <td>{{$u->name}}</td>
                         <td>{{$u->email}}</td>
                         <td>
                             @if ($u->quyen == 1) 

@@ -10,7 +10,7 @@
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
-            <div class="col-lg-7" style="padding-bottom:120px">
+            <div class="col-lg-10" style="padding-bottom:120px">
                 @if(count($errors) > 0)
                     <div class="alert alert-danger">
                         @foreach($errors->all() as $err)
@@ -23,15 +23,28 @@
                         {{session('thongbao')}}
                     </div>
                 @endif
-                <form action="admin/casi/sua/{{$casi->idCaSi}}" method="POST" enctype="multipart/form-data">
+                <form action="admin/casi/sua/{{$casi->id}}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{csrf_token()}}" />
                     <div class="form-group">
                         <label>Tên Ca sĩ</label>
                         <input class="form-control" name="ten" placeholder="Nhập tên ca sĩ" value="{{ $casi->ten }}" />
                     </div>
                     <div class="form-group">
+                        <label>Thể Loại Nhạc</label>
+                        <select class="form-control" name="theloai">
+                            @foreach($theloai as $tl)
+                                <option
+                                    @if($casi->idtheloai == $tl->id)
+                                        {{"selected"}}
+                                    @endif
+                                    value="{{$tl->id}}">{{$tl->ten}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label>Thông tin</label>
-                        <input id="thongtin" name="thongtin" class="form-control ckeditor" rows="5" value="{{ $casi->thongtin }}" />
+                        <textarea id="demo" name="thongtin" class="form-control ckeditor" rows="3">{{ $casi->thongtin }}</textarea>
                     </div>
                     <div class="form-group">
                         <label>Ảnh</label>

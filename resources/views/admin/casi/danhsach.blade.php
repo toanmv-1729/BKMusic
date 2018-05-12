@@ -20,6 +20,7 @@
                     <tr align="center">
                         <th>ID</th>
                         <th>Tên</th>
+                        <th>Thể loại nhạc</th>
                         <th>Thông tin</th>
                         <th>Ảnh</th>
                         <th>Sửa</th>
@@ -29,14 +30,15 @@
                 <tbody>
                     @foreach($casi as $cs)
                     <tr class="odd gradeX" align="center">
-                        <td>{{$cs->idCaSi}}</td>
+                        <td>{{$cs->id}}</td>
                         <td>{{$cs->ten}}</td>
-                        <td>{{$cs->thongtin}}</td>
+                        <td>{{$cs->theloai->ten}}</td>
+                        <td>{{ cutstring($cs->thongtin , 20) }}</td>
                         <td>
                             <img src="upload/casi/{{$cs->urlanh}}" width="60px">
                         </td>
-                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/casi/sua/{{$cs->idCaSi}}"> Sửa</a></td>
-                        <td class="center"><i class="fa fa-trash-o fa-fw"></i> <a href="admin/casi/xoa/{{$cs->idCaSi}}">Xóa</a></td>
+                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/casi/sua/{{$cs->id}}"> Sửa</a></td>
+                        <td class="center"><i class="fa fa-trash-o fa-fw"></i> <a href="admin/casi/xoa/{{$cs->id}}">Xóa</a></td>
                     </tr>
                     @endforeach
                 </tbody>
