@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html">Admin Area - BKMp3</a>
+        <a class="navbar-brand" href="/">Admin Area - BKMp3</a>
     </div>
     <!-- /.navbar-header -->
 
@@ -18,13 +18,15 @@
                 <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> Thông tin người dùng</a>
+                @if(Auth::check())
+                <li><a href="#"><i class="fa fa-user fa-fw"></i> {{Auth::user()->name}}</a>
                 </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Cài đặt</a>
+                <li><a href="admin/user/sua/{{Auth::user()->id}}"><i class="fa fa-gear fa-fw"></i>Cập nhật hồ sơ</a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+                <li><a href="admin/dangxuat"><i class="fa fa-sign-out fa-fw"></i>Đăng xuất</a>
                 </li>
+                @endif
             </ul>
             <!-- /.dropdown-user -->
         </li>

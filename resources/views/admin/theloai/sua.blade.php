@@ -25,7 +25,7 @@
 					</div>
 				@endif
 				
-				<form action="admin/theloai/sua/{{$theloai->idTheLoai}}" method="POST">
+				<form action="admin/theloai/sua/{{$theloai->id}}" method="POST">
 					<input type="hidden" name="_token" value= "{{csrf_token()}}" />
 					<div class="form-group">
 						<label>Tên thể loại</label>

@@ -62,6 +62,8 @@
     });
     </script>
 
+    <script type="text/javascript" language="javascript" src="admin_mp3/ckeditor/ckeditor.js" ></script>
+
     @yield('script')
 </body>
 

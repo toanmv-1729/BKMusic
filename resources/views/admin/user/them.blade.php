@@ -20,7 +20,7 @@
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="form-group">
                         <label>Họ Tên</label>
-                        <input class="form-control" name="ten" placeholder="Điền tên người dùng" />
+                        <input class="form-control" name="name" placeholder="Điền tên người dùng" />
                     </div>
                     <div class="form-group">
                         <label>Email</label>

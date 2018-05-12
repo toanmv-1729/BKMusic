@@ -21,14 +21,14 @@ class UserController extends Controller
 	public function postThem(Request $request) {
 		$this->validate($request,
 			[
-				'ten' => 'required|min:3',
+				'name' => 'required|min:3',
 				'email' => 'required|email|unique:users,email',
 				'password' => 'required|min:3|max:32',
 				'passwordAgain' => 'required|same:password'
 			],
 			[
-				'ten.required' => 'Bạn chưa nhập tên người dùng', 
-				'ten.min' => 'Tên người dùng phải có ít nhất 3 ký tự', 
+				'name.required' => 'Bạn chưa nhập tên người dùng', 
+				'name.min' => 'Tên người dùng phải có ít nhất 3 ký tự', 
 				'email.required' => 'Bạn chưa nhập email', 
 				'email.email' => 'Bạn chưa nhập đúng định dạng email', 
 				'email.unique' => 'Email đã tồn tại', 
@@ -41,7 +41,7 @@ class UserController extends Controller
 		);
 
 		$user = new User;
-		$user->ten = $request->ten;
+		$user->name = $request->name;
 		$user->email = $request->email;
 		$user->password = bcrypt($request->password);
 		$user->quyen = $request->quyen;
@@ -74,17 +74,17 @@ class UserController extends Controller
 	public function postSua(Request $request,$id) {
 		$this->validate($request,
 			[
-				'ten' => 'required|min:3'
+				'name' => 'required|min:3'
 				
 			],
 			[
-				'ten.required' => 'Bạn chưa nhập tên người dùng', 
-				'ten.min' => 'Tên người dùng phải có ít nhất 3 ký tự'
+				'name.required' => 'Bạn chưa nhập tên người dùng', 
+				'name.min' => 'Tên người dùng phải có ít nhất 3 ký tự'
 			]
 		);
 
 		$user = User::find($id);
-		$user->ten = $request->ten;
+		$user->name = $request->ten;
 		$user->quyen = $request->quyen;
 		if($request->changePassword == "on") {
 			$this->validate($request,

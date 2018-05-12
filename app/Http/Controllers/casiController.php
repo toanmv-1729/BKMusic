@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Singer;
+use App\TheLoai;
 
 class casiController extends Controller
 {
@@ -14,7 +15,8 @@ class casiController extends Controller
 	}
 	
 	public function getThem() {
-		return view('admin.casi.them');
+		$theloai = TheLoai::all();
+		return view('admin.casi.them',['theloai'=>$theloai]);
 	}
 
 	public function postThem(Request $request) {
@@ -22,11 +24,13 @@ class casiController extends Controller
 			$request, 
 			[
 				'ten' => 'required|min:3|max:100|unique:singers,ten',
-				'thongtin' => 'required'
+				'thongtin' => 'required',
+				'theloai'=>'required',
 			],
 			[
 				'ten.required' => 'Bạn chưa nhập tên ca sĩ',
 				'thongtin.required' => 'Bạn chưa nhập thông tin ca sĩ',
+				'theloai.required'=>'Bạn chưa chọn thể loại nhạc',
 			 	'ten.min' => 'Tên ca sĩ phải có độ dài từ 3 đến 100 ký tự',
 			 	'ten.max' => 'Tên ca sĩ phải có độ dài từ 3 đến 100 ký tự',
 			 	'ten.unique' => 'Tên ca sĩ đã tồn tại',
@@ -35,7 +39,9 @@ class casiController extends Controller
 
 		$casi = new Singer;
 		$casi->ten = $request->ten;
+		$casi->idtheloai = $request->theloai;
 		$casi->thongtin = $request->thongtin;
+
 		if($request->hasFile('urlanh')) {
 			$file = $request->file('urlanh');
 			$duoi = $file->getClientOriginalExtension();
@@ -60,8 +66,9 @@ class casiController extends Controller
 	}
 
 	public function getSua($id) {
+		$theloai = TheLoai::all();
 		$casi = Singer::find($id);
-		return view('admin.casi.sua',['casi' => $casi]);
+		return view('admin.casi.sua',['theloai'=>$theloai, 'casi' => $casi]);
 	}
 
 	public function postSua(Request $request,$id) {
@@ -69,20 +76,23 @@ class casiController extends Controller
 		$this->validate(
 			$request, 
 			[
-				'ten' => 'required|min:3|max:100|unique:singers,ten',
-				'thongtin' => 'required'
+				'ten' => 'required|min:3|max:100',
+				'thongtin' => 'required',
+				'theloai'=>'required',
 			],
 			[
 				'ten.required' => 'Bạn chưa nhập tên ca sĩ',
 				'thongtin.required' => 'Bạn chưa nhập thông tin ca sĩ',
+				'theloai.required'=>'Bạn chưa chọn thể loại nhạc',
 			 	'ten.min' => 'Tên ca sĩ phải có độ dài từ 3 đến 100 ký tự',
 			 	'ten.max' => 'Tên ca sĩ phải có độ dài từ 3 đến 100 ký tự',
-			 	'ten.unique' => 'Tên ca sĩ đã tồn tại',
+			 	
 			]
 		);
 
 		$casi->ten = $request->ten;
 		$casi->thongtin = $request->thongtin;
+		$casi->idtheloai = $request->theloai;
 		if($request->hasFile('urlanh')) {
 			$file = $request->file('urlanh');
 			$duoi = $file->getClientOriginalExtension();

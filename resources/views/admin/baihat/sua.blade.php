@@ -10,7 +10,7 @@
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
-            <div class="col-lg-7" style="padding-bottom:120px">
+            <div class="col-lg-10" style="padding-bottom:120px">
                 @if(count($errors) > 0)
                     <div class="alert alert-danger">
                         @foreach($errors->all() as $err)
@@ -23,7 +23,7 @@
                         {{session('thongbao')}}
                     </div>
                 @endif
-                <form action="admin/baihat/sua/{{$baihat->idBaiHat}}" method="POST">
+                <form action="admin/baihat/sua/{{$baihat->id}}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{csrf_token()}}" />
                     <div class="form-group">
                         <label>Tên Bài Hát</label>
@@ -33,15 +33,24 @@
                         <label>Ca sĩ</label>
                         <select class="form-control" name="casi" id="casi">
                             @foreach($casi as $cs)
-                                <option value="{{$cs->idCaSi}}">{{$cs->ten}}</option>
+                                <option 
+                                @if($baihat->casi->id == $cs->id)
+                                    {{'selected'}}
+                                @endif
+
+                                value="{{$cs->id}}">{{$cs->ten}}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Thể loại</label>
                         <select class="form-control" name="theloai" id="theloai">
-                            @foreach($casi as $cs)
-                                <option value="{{$cs->idCaSi}}">{{$cs->ten}}</option>
+                            @foreach($theloai as $tl)
+                                <option 
+                                @if($baihat->casi->theloai->id == $tl->id)
+                                    {{'selected'}}
+                                @endif
+                                value="{{$tl->id}}">{{$tl->ten}}</option>
                             @endforeach
                         </select>
                     </div>

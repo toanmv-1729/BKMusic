@@ -10,12 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\TheLoai;
+use App\Singer;
+use App\Song;
 
 Route::get('/', function () {
 	return view('welcome');
 });
 
-Route::group(['prefix'=>'admin'],function(){
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix'=>'admin', 'middleware'=>'adminLogin'],function(){
 	Route::group(['prefix'=>'baihat'],function(){
 
 		Route::get('danhsach','baihatController@getDanhSach');
@@ -55,6 +61,10 @@ Route::group(['prefix'=>'admin'],function(){
 		Route::get('xoa/{id}','casiController@getXoa');
 	});
 
+	Route::group(['prefix'=>'ajax'],function(){
+		Route::get('casi/{idtheloai}','AjaxController@getCaSi');
+	});
+
 	Route::group(['prefix'=>'user'],function(){
 		
 		Route::get('danhsach','UserController@getDanhSach');
@@ -68,3 +78,7 @@ Route::group(['prefix'=>'admin'],function(){
 		Route::get('xoa/{id}','UserController@getXoa');
 	});
 });
+
+Route::get('trangchu','PagesController@trangchu');
+Route::get('baihat/{id}.html','PagesController@baihat');
+

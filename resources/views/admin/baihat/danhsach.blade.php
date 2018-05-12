@@ -30,8 +30,8 @@
                     <tr align="center">
                         <th>STT</th>
                         <th>Tên bài hát</th>
-                        <th>Ca sĩ</th>
                         <th>Thể loại</th>
+                        <th>Ca sĩ</th>
                         <th>Lời bài hát</th>
                         <th>Số lượt nghe</th>
                         <th>Số lượt tải</th>
@@ -40,17 +40,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php $i=0 @endphp
                     @foreach($baihat as $bh)
                     <tr class="odd gradeX" align="center">
-                        <td>{{$bh->idBaiHat}}</td>
+                        <td>@php echo ++$i @endphp</td>
                         <td>{{$bh->ten}}</td>
-                        <td>{{$bh->idCaSi}}</td>
-                        <td>{{$bh->theloai}}</td>
+                        <td>{{$bh->casi->theloai->ten}}</td>
+                        <td>{{$bh->casi->ten}}</td>
                         <td>{{$bh->lyrics}}</td>
                         <td>{{$bh->luotnghe}}</td>
                         <td>{{$bh->luottai}}</td>
-                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/baihat/sua/{{$bh->idBaiHat}}"> Sửa</a></td>
-                        <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/baihat/xoa/{{$bh->idBaiHat}}"> Xóa</a></td>
+                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/baihat/sua/{{$bh->id}}"> Sửa</a></td>
+                        <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/baihat/xoa/{{$bh->id}}"> Xóa</a></td>
                     </tr>
                     @endforeach
                 </tbody>
