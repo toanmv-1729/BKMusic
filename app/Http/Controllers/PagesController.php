@@ -40,4 +40,8 @@ class PagesController extends Controller
 
         return view('pages.baihat',['baihat'=>$baihat, 'comments' => $comments, 'music_id' => $id, 'user_id' => $user_id]);
     }
+
+    function casi($id) {
+    	
+    }
 }
