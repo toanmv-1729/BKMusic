@@ -30,7 +30,7 @@
                     <div class="col-block">
                         <h3 class="quarter-top-margin"><a href="baihat/{{ $bh['id'] }}.html">{{ $bh->ten }}</a></h3>
                         <p>Lượt nghe: {{ $bh->luotnghe }}</p>
-                        <p>Lượt tải: {{ $bh->luottai }}</p>
+                        <p>Lượt tải: {{ $bh->luotnghe }}</p>
                         <a onclick="myFunction({{$bh->id}})" href="/downloadBaiHat/{{$bh->id}}/{{$bh->urlthuong}}" class="btn btn-general btn-white" style="padding: 5px;"><i class="fa fa-download"></i> Download</a>
                     </div>
                     @endforeach

@@ -65,7 +65,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>'adminLogin'],function(){
 		Route::get('danhsach', 'CommentsController@getListComment');
 		Route::get('xoa/{id}', 'CommentsController@getDelete');
 	});
-	
+
 	Route::group(['prefix'=>'ajax'],function(){
 		Route::get('casi/{idtheloai}','AjaxController@getCaSi');
 	});
@@ -94,6 +94,7 @@ Route::post('dangnhap','PagesController@postDangNhap');
 Route::get('dangxuat','PagesController@getDangXuat');
 Route::get('dangky','PagesController@getDangKy');
 Route::post('dangky','PagesController@postDangKy');
+Route::get('timkiem','PagesController@timkiem');
 
 Route::group(['prefix' => 'comments'], function(){
 	Route::get('addComment', 'CommentsController@addComment');

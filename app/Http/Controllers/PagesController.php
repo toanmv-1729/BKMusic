@@ -51,7 +51,9 @@ class PagesController extends Controller
     }
 
     function dsbaihat($id) {
-    	
+    	$theloai = TheLoai::find($id)->get();
+    	$casi = Singer::where('idtheloai',$id)->paginate(6);
+    	return view('pages.dsbaihat',['theloai'=>$theloai,'casi'=>$casi]);
     }
 
     function getDangNhap() {
@@ -118,5 +120,11 @@ class PagesController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
         return redirect('/dangky')->with('thongbao','Đăng ký thành công');
+    }
+
+    function timkiem(Request $request) {
+        $tukhoa = $request->tukhoa;
+        $baihat = Song::where('ten','like',"%$tukhoa%")->orWhere('urlthuong','like',"%$tukhoa%")->orWhere('lyrics','like',"%$tukhoa%")->take(30)->paginate(5)->appends(['tukhoa' => $tukhoa]);
+        return view('pages.timkiem',['baihat'=>$baihat,'tukhoa'=>$tukhoa]);
     }
 }

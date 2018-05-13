@@ -1,4 +1,4 @@
-@extends('pages.layouts.index')
+@extends('pages.layouts.index2')
 
 @section('content')
 <section class="s-content">

@@ -29,7 +29,9 @@
                          sizes="(max-width: 2000px) 100vw, 2000px" alt="" >
 
                     <div class="audio-wrap">
-                        <audio id="player2" src="upload/baihat/nhacthuong/{{ $baihat->urlthuong }}" width="100%" height="42" controls="controls"></audio>
+                        <audio autoplay="" width="100%" height="42" controls>
+                            <source src="upload/baihat/nhacthuong/{{ $baihat->urlthuong }}" type="audio/ogg">
+                        </audio>
                     </div>
                 </div>
             </div> <!-- end s-content__media -->
