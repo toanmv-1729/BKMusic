@@ -9,6 +9,19 @@
         <article class="row format-audio">
 
             <div class="s-content__header col-full">
+                @if(count($errors) > 0)
+                <div class="alert alert-danger">
+                    @foreach($errors->all() as $err)
+                    {{$err}}<br>
+                    @endforeach()
+                </div>
+                @endif
+
+                @if(session('thongbao'))
+                <div class="alert-box alert-box--error" style="font-family: serif;">
+                    <p> {{session('thongbao')}} </p>
+                </div>                        
+                @endif
                 <h1 class="s-content__header-title">
                     {{ $baihat->ten }}
                 </h1>
@@ -36,7 +49,9 @@
                 </div>
             </div> <!-- end s-content__media -->
             
-            <a onclick="myFunction({{$baihat->id}})" href="/downloadBaiHat/{{$baihat->id}}/{{$baihat->urlthuong}}" class="btn btn-general btn-white" style="padding: 5px;"><i class="fa fa-download"></i> Download</a>
+            <a onclick="myFunction({{$baihat->id}})" href="/downloadBaiHat/{{$baihat->id}}/{{$baihat->urlthuong}}" class="btn btn-general btn-white" style="padding: 5px;"><i class="fa fa-download"></i> Download (128Kbps)</a>
+
+            <a onclick="myFunction({{$baihat->id}})" href="/downloadBaiHatVip/{{$baihat->id}}/{{$baihat->urlvip}}" class="btn btn-general btn-white" style="padding: 5px;"><i class="fa fa-download"></i> Download (320Kbps,Lossless)</a>
 
             <div class="col-full s-content__main">
 

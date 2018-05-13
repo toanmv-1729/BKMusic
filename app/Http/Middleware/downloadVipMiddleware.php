@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class AdminLoginMiddleware
+class downloadVipMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,11 +18,11 @@ class AdminLoginMiddleware
     {
         if(Auth::check()) {
             $user = Auth::user();
-            if ($user->quyen == 1)
+            if ($user->quyen == 2)
                 return $next($request);
-            else return redirect('/trangchu')->with('thongbao','Admin mới có thể truy cập, mời đăng xuất');
+            else return redirect()->back()->with('thongbao','Tài khoản Vip mới có thể Download');
         }
         else
-            return redirect('/home')->with('thongbao','Tài khoản hoặc mật khẩu không đúng');
+            return redirect('/dangnhap')->with('thongbao','Bạn phải đăng nhập với tài khoản Vip mới có thể tải');
     }
 }

@@ -11,6 +11,7 @@ use App\User;
 use App\Comments;
 use DB;
 use Laravel\Scout\Searchable;
+use App\Http\Controllers\Controller;
 
 class PagesController extends Controller
 {
@@ -88,6 +89,69 @@ class PagesController extends Controller
         return redirect('/trangchu');
     }
 
+    function getNguoiDung() {
+        $user = Auth::user();
+        if(Auth::check())
+            return view('pages.nguoidung',['user'=>$user]);
+        else
+            return redirect('dangnhap')->with('thongbao','Bạn chưa Đăng Nhập!');
+    }
+
+    function postNguoiDung(Request $request) {
+        $this->validate($request,
+            [
+                'name' => 'required|min:3'
+                
+            ],
+            [
+                'name.required' => 'Bạn chưa nhập tên người dùng', 
+                'name.min' => 'Tên người dùng phải có ít nhất 3 ký tự'
+            ]
+        );
+
+        $user = Auth::user();
+        $user->name = $request->name;
+        
+        if($request->changePassword == "on") {
+            $this->validate($request,
+                [
+                    'password' => 'required|min:3|max:32',
+                    'passwordAgain' => 'required|same:password'
+                ],
+                [
+                    'password.required' => 'Bạn chưa nhập mật khẩu', 
+                    'password.min' => 'Mật khẩu có ít nhất 3 ký tự',
+                    'password.max' => 'Mật khẩu có nhiều nhất nhất 32 ký tự',
+                    'passwordAgain.required' => 'Bạn chưa nhập lại mật khẩu',
+                    'passwordAgain.same' => 'Mật khẩu nhập lại chưa đúng'
+                ]
+            );
+            $user->password = bcrypt($request->password);
+
+        }
+
+        if($request->hasFile('urlanh')) {
+            $file = $request->file('urlanh');
+            $duoi = $file->getClientOriginalExtension();
+            if($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg') {
+                return redirect('nguoidung')->with('loi','Chọn đuôi có file jpg,png hoặc jpeg');
+            }
+            $name = $file->getClientOriginalName();
+            $urlanh = str_random(4)."_".$name;
+            while(file_exists("upload/user/".$urlanh)) {
+                $urlanh = str_random(4)."_".$name;
+            }
+            $file->move("upload/user",$urlanh);
+            $user->urlanh = $urlanh;
+        }
+        else {
+            $user->urlanh = "defaultuser.png";
+        }
+
+        $user->save();
+        return redirect('nguoidung')->with('thongbao','Bạn đã sửa thành công');
+    }
+
     function getDangKy() {
         return view('pages.dangky');
     }
@@ -117,6 +181,7 @@ class PagesController extends Controller
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->urlanh = 'defaultuser.png';
         $user->password = bcrypt($request->password);
         $user->save();
         return redirect('/dangky')->with('thongbao','Đăng ký thành công');

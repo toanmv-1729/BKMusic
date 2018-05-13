@@ -87,10 +87,15 @@ Route::group(['prefix'=>'admin', 'middleware'=>'adminLogin'],function(){
 Route::get('trangchu','PagesController@trangchu');
 Route::get('baihat/{id}.html','PagesController@baihat');
 Route::get('/downloadBaiHat/{id}/{file}', 'downloadController@downloadBaiHat');
+Route::group(['middleware'=>'download'],function(){
+	Route::get('/downloadBaiHatVip/{id}/{file}', 'downloadController@downloadBaiHatVip');
+});
 Route::get('casi/{id}.html','PagesController@casi');
 Route::get('theloai/{id}/{tenkhongdau}.html','PagesController@dsbaihat');
 Route::get('dangnhap','PagesController@getDangNhap');
 Route::post('dangnhap','PagesController@postDangNhap');
+Route::get('nguoidung','PagesController@getNguoiDung');
+Route::post('nguoidung','PagesController@postNguoiDung');
 Route::get('dangxuat','PagesController@getDangXuat');
 Route::get('dangky','PagesController@getDangKy');
 Route::post('dangky','PagesController@postDangKy');

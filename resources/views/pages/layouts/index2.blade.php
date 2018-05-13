@@ -37,7 +37,7 @@
 
     <!-- pageheader
     ================================================== -->
-    @include('pages.layouts.header')
+    @include('pages.layouts.header2')
 
     <!-- s-content
     ================================================== -->
