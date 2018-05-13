@@ -53,15 +53,21 @@
     <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-12" style="float: none;">
                         <h1 class="page-header">Bình luận
                             <small>comment</small>
                         </h1>
                     </div>
                     
-                    <div class="boxComment col-md-4">
+                    {{-- <div class="boxComment col-md-4"> --}}
+                    <div class="contain-all-comment"> 
+                        <?php $countComment = 0; ?>
                         @foreach($comments as $cms)
+                            @if($countComment >= 5)
+                                <?php break; ?>
+                            @endif
                             @if($cms->parent_id == 0)
+                                <?php $countComment += 1; ?>
                                 <div class="comments{{$cms->id}}">
                                     <?php $user = User::find($cms->user_id); ?>
                                     <div style="margin-bottom: 13px">
@@ -143,10 +149,16 @@
                             @endif
                         @endforeach
 
-                        <!-- Form add comment -->
                         <div class="newComment"></div>
+                        <div class="load-more" style="text-align: center;">
+                            <?php if($countComment >= 5){ ?>
+                                <a class = "action more-comment" onclick = "load_more(1, {{$baihat->id}})">Xem thêm</a>
+                            <?php } ?>
+                        </div>
                         <div class="addComment input-group">
-                            <input type="text" class="form-control comment-input" placeholder="Add your comment" />
+                            <div class="contain-input-comment">
+                                <input type="text" class="form-control comment-input" placeholder="Add your comment" />
+                            </div>
                             <div class="input-group-btn">
                                 @if($user_id != 0)
                                     <button class="btn btn-success" type="submit" onclick="addComment({{$music_id}})">Send</button>
@@ -156,9 +168,11 @@
                             </div>
                         </div>
                     </div>
+                    {{-- </div> --}}
                 </div>
             </div>
     </div>
+    <br/>
 
     </section>
 @endsection

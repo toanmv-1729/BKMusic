@@ -61,6 +61,11 @@ Route::group(['prefix'=>'admin', 'middleware'=>'adminLogin'],function(){
 		Route::get('xoa/{id}','casiController@getXoa');
 	});
 
+	Route::group(['prefix'=>'comment'],function(){
+		Route::get('danhsach', 'CommentsController@getListComment');
+		Route::get('xoa/{id}', 'CommentsController@getDelete');
+	});
+	
 	Route::group(['prefix'=>'ajax'],function(){
 		Route::get('casi/{idtheloai}','AjaxController@getCaSi');
 	});
@@ -101,4 +106,5 @@ Route::group(['prefix' => 'comments'], function(){
 	Route::get('removeReply', 'CommentsController@removeReply');
 	Route::get('reply', 'CommentsController@reply');
 	Route::get('hiddenReply', 'CommentsController@hiddenReply');
+	Route::get('loadMore', 'CommentsController@loadMore');
 });

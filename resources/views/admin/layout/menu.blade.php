@@ -40,13 +40,22 @@
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href=""><i class="fa fa-cube fa-fw"></i> Ca sĩ<span class="fa arrow"></span></a>
+                <a href=""><i class="fa fa-user"></i> Ca sĩ<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
                         <a href="admin/casi/danhsach">Danh sách ca sĩ</a>
                     </li>
                     <li>
                         <a href="admin/casi/them">Thêm ca sĩ</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            <li>
+                <a href=""><i class="fa fa-comments"></i> Bình luận<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="admin/comment/danhsach">Danh sách bình luận</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->

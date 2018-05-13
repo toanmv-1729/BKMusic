@@ -11,27 +11,32 @@
 }
 
 .action{
-	font-size: 12px
+    font-size: 12px;
 }
 
 .action:hover{
-	cursor: pointer;
+    cursor: pointer;
     text-decoration: underline;
 }
 
+.more-comment{
+    font-size: 16px;
+}
+
 .loadReply{
-	margin-left: 10%;
+    margin-left: 10%;
 }
 
 .addComment{
-	margin: 30px 0px 20px 0px;
+    margin: 30px 0px 20px 0px;
 }
 
 .form-control{
-	border-radius: 2px;
-	height: 27px;
-	margin-right: 3px;
-	font-size: 13px;
+    border-radius: 2px;
+    height: 27px;
+    margin-right: 3px;
+    font-size: 13px;
+    width: 99%;
 }
 
 .angry{
@@ -139,4 +144,18 @@
     float: left;
     margin-top: 0.5%;
     margin-right: 1%;
+}
+
+.contain-all-comment{
+    padding: 2%;
+    background-color: #cfd4d0;
+}
+
+.contain-input-comment{
+    width: 80%;
+    float: left;
+}
+
+.input-group-btn{
+    padding-top: 0.7%;
 }
